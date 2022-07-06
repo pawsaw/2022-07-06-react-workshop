@@ -1,24 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useCallback, useEffect, useState } from 'react';
 import './App.css';
+import { Counter, OnValueChanged } from './components/Counter';
 
 function App() {
+  const [count, setCount] = useState(0);
+
+  // useEffect(() => {
+  //   const int = setInterval(() => {
+  //     setCount((count) => count + 1);
+  //     console.log({ count });
+  //   }, 1000);
+
+  //   return () => clearInterval(int);
+  // }, [count]);
+
+  const onCounterValueChanged: OnValueChanged = useCallback(
+    (newValue: number) => setCount(newValue),
+    [],
+  );
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      Count: {count}
+      <Counter onValueChanged={onCounterValueChanged} value={count} />
     </div>
   );
 }
