@@ -1,14 +1,30 @@
 import { useState } from 'react';
+import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
-import { BookList } from './components/BookList';
-import { Counter2, CounterContextProvider } from './components/Counter2';
-import { useBooks } from './domain/books/useBooks';
+import { CounterContextProvider } from './components/Counter2';
+import { BooksScreen } from './screens/BooksScreen';
+import { PlaygroundScreen } from './screens/PlaygroundScreen';
 // import { books } from './data/books';
+
+const AppNavigation = () => (
+  <nav>
+    <ul>
+      <li>
+        <NavLink to="/playground" activeClassName="active">
+          Playground
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/books" activeClassName="active">
+          Books
+        </NavLink>
+      </li>
+    </ul>
+  </nav>
+);
 
 function App() {
   // ...
-
-  const { books, reload } = useBooks();
 
   const [count, setCount] = useState(0);
 
@@ -24,18 +40,12 @@ function App() {
         },
       }}
     >
-      <div className="App">
-        {books !== null ? (
-          <BookList
-            books={books}
-            onBookSelected={(book) => alert(book.price)}
-          />
-        ) : (
-          <span>Loading...</span>
-        )}
-      </div>
-      <Counter2 />
-      <button onClick={() => reload()}>Reload</button>
+      <AppNavigation />
+      <Switch>
+        <Route path="/playground" component={PlaygroundScreen} />
+        <Route path="/books" component={BooksScreen} />
+        <Redirect to="/books" />
+      </Switch>
     </CounterContextProvider>
   );
 }

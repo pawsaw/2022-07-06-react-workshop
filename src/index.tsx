@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ContextApiProvider } from './api/ContextApi';
-import { CounterContextProvider } from './components/Counter2';
+import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -12,7 +12,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ContextApiProvider baseUrl="http://localhost:4730">
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ContextApiProvider>
   </React.StrictMode>,
 );

@@ -1,7 +1,5 @@
-import { useContext } from 'react';
-import { Book } from '../../domain/books';
-import { noop } from '../../utils/noop';
-import { useCounter } from '../Counter2';
+import { Book } from '../../../domain/books';
+import { noop } from '../../../utils/noop';
 import { BookListItem } from './BookListItem/BookListItem';
 import { OnBookSelected } from './OnBookSelected';
 
@@ -14,7 +12,6 @@ export const BookList: React.FC<BookListProps> = ({
   books,
   onBookSelected = noop,
 }) => {
-  const { count } = useCounter();
   return (
     <div>
       {books.map((book) => (
@@ -24,7 +21,6 @@ export const BookList: React.FC<BookListProps> = ({
           onBookSelected={onBookSelected}
         />
       ))}
-      Counter: {count}
     </div>
   );
 };
