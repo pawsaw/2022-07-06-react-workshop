@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { NavLink, Redirect, Route, Switch } from 'react-router-dom';
+import { NavLink, Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import './App.css';
 import { CounterContextProvider } from './components/Counter2';
+import { BookDetailsScreen } from './screens/BookDetailsScreen';
 import { BooksScreen } from './screens/BooksScreen';
 import { PlaygroundScreen } from './screens/PlaygroundScreen';
 // import { books } from './data/books';
@@ -27,6 +28,7 @@ function App() {
   // ...
 
   const [count, setCount] = useState(0);
+  const history = useHistory();
 
   return (
     <CounterContextProvider
@@ -43,7 +45,17 @@ function App() {
       <AppNavigation />
       <Switch>
         <Route path="/playground" component={PlaygroundScreen} />
-        <Route path="/books" component={BooksScreen} />
+        <Route path="/books/:isbn" component={BookDetailsScreen} />
+        <Route
+          path="/books"
+          render={() => (
+            <BooksScreen
+              onBookSelected={(book) => {
+                history.push(`/books/${book.id}`);
+              }}
+            />
+          )}
+        />
         <Redirect to="/books" />
       </Switch>
     </CounterContextProvider>
